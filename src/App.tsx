@@ -69,7 +69,18 @@ export default function App() {
 
     const phoneNumber = '529681155812';
     
-    let orderDetails = cart.map(item => `- ${item.quantity}x ${item.name} ($${item.price * item.quantity})`).join('\n');
+    let orderDetails = cart.map(item => {
+      const categoryMap: Record<string, string> = {
+        'tacos': 'Taco',
+        'tortas': 'Torta',
+        'quesatacos': 'Quesataco',
+        'gringas': 'Gringa',
+        'bebidas': 'Bebida',
+        'carnes': 'Carne'
+      };
+      const category = categoryMap[item.category] || item.category;
+      return `- ${item.quantity}x ${category} de ${item.name} ($${item.price * item.quantity})`;
+    }).join('\n');
     
     const message = encodeURIComponent(
       `¡Hola Taqueria Chente!\n\n` +
